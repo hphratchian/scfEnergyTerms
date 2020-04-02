@@ -59,9 +59,6 @@
       write(IOut,1010) TRIM(matrixFilename)
       nAtoms = GMatrixFile%getVal('nAtoms')
       write(IOut,1100) nAtoms
-
-      write(IOut,*)'blah!!! blah!!!'
-
 !
 !     Figure out nAt3, then allocate memory for key arrays.
 !
@@ -71,11 +68,8 @@
 !     Load up a few matrices from the matrix file.
 !
       call GMatrixFile%getArray('OVERLAP',mqcVarOut=SMatrixAO)
-      write(IOut,*)' Ha ha ha'
       call GMatrixFile%getArray('KINETIC ENERGY',mqcVarOut=TMatrixAO)
-      write(IOut,*)' 1234'
       call GMatrixFile%getArray('CORE HAMILTONIAN ALPHA',mqcVarOut=HCoreMatrixAO)
-      write(IOut,*)' hranthranthrant'
       call GMatrixFile%getArray('ALPHA FOCK MATRIX',mqcVarOut=FMatrixAlpha)
       if(GMatrixFile%isUnrestricted()) then
         call GMatrixFile%getArray('BETA FOCK MATRIX',mqcVarOut=FMatrixBeta)
@@ -88,20 +82,17 @@
       else
         PMatrixBeta  = PMatrixAlpha
       endIf
-      write(IOut,*)' hannahhannahhannahhannah'
       PMatrixTotal = PMatrixAlpha+PMatrixBeta
       VMatrixAO = HCoreMatrixAO-TMatrixAO
 !
 !     Calculate the number of electrons using <PS>.
 !
-      write(IOut,*)' abbyabby'
       nEalpha = Contraction(PMatrixAlpha,SMatrixAO)
-      write(IOut,*)' gracegrace'
       nEbeta  = Contraction(PMatrixBeta,SMatrixAO)
       nEtot   = Contraction(PMatrixTotal,SMatrixAO)
-      call nEalpha%print(IOut,'<P(Alpha)S>=')
-      call nEbeta%print(IOut,'<P(Beta )S>=')
-      call nEtot%print(IOut,'<P(Total)S>=')
+      call nEalpha%print(IOut,' <P(Alpha)S>=')
+      call nEbeta%print(IOut,' <P(Beta )S>=')
+      call nEtot%print(IOut,' <P(Total)S>=')
 !
 !     Calculate the 1-electron energy and component pieces of the 1-electron
 !     energy. Also, calculate the 2-electron energy.
@@ -116,10 +107,10 @@
       endIf
       TwoElEnergy = TwoElEnergy - OneElEnergy
       TwoElEnergy = MQC(0.5)*TwoElEnergy
-      call KEnergy%print(IOut,'<P.K>')
-      call VEnergy%print(IOut,'<P.V>')
-      call OneElEnergy%print(IOut,'<P.H>')
-      call TwoElEnergy%print(IOut,'<P.F>-<P.H>')
+      call KEnergy%print(IOut,' <P.K> = ')
+      call VEnergy%print(IOut,' <P.V> =')
+      call OneElEnergy%print(IOut,' <P.H> = ')
+      call TwoElEnergy%print(IOut,' <P.F>-<P.H> = ')
 !
 !     Load the atommic numbers and Cartesian coordinates into our intrinsic
 !     arrays.
@@ -167,7 +158,7 @@
 !
       scfEnergy = oneElEnergy + twoElEnergy
       scfEnergy = scfEnergy + MQC(Vnn)
-      call scfEnergy%print(IOut,'SCF Energy = ')
+      call scfEnergy%print(IOut,' SCF Energy = ')
 !
   999 Continue
       write(iOut,8999)
