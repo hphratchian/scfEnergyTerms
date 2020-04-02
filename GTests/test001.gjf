@@ -1,0 +1,11 @@
+%chk=test001
+#p test hf geom=modela opt output=mat
+symm=saveOrientation
+
+test
+
+0  1
+c oh h h me
+
+test001.mat
+

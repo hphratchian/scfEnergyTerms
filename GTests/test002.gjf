@@ -1,0 +1,12 @@
+%chk=test002
+#p test hf output=mat
+symm=saveOrientation
+
+test
+
+-1  1
+o(iso=1.0)
+h(iso=1.0)  1  1.0
+
+test002.mat
+
